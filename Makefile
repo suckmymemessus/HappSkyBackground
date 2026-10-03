@@ -12,7 +12,3 @@ HappSkyBackground_CFLAGS = -fobjc-arc
 HappSkyBackground_FRAMEWORKS = UIKit
 
 include $(THEOS_MAKE_PATH)/tweak.mk
-
-after-stage::
- mkdir -p "$(THEOS_STAGING_DIR)/Library/Application Support/HappSkyBackground"
- cp "Resources/IMG_0021.jpeg" "$(THEOS_STAGING_DIR)/Library/Application Support/HappSkyBackground/HappSkyBackground.jpg"
