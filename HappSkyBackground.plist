@@ -1,0 +1,7 @@
+{
+    Filter = {
+        Bundles = (
+            "su.ffg.happ"
+        );
+    };
+}

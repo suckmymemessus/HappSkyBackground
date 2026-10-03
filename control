@@ -1,0 +1,9 @@
+Package: com.callme.happskybackground
+Name: Happ Sky Background
+Version: 0.1.0
+Architecture: iphoneos-arm64
+Description: Custom photo background for Happ (iOS).
+Maintainer: Callme
+Author: Callme
+Section: Tweaks
+Depends: firmware (>= 15.0)
