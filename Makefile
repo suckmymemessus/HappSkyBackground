@@ -10,6 +10,6 @@ TWEAK_NAME = HappSkyBackground
 HappSkyBackground_FILES = Tweak.x
 HappSkyBackground_CFLAGS = -fobjc-arc
 HappSkyBackground_FRAMEWORKS = UIKit
-HappSkyBackground_RESOURCE_DIR = Resources
 
 include $(THEOS_MAKE_PATH)/tweak.mk
+
