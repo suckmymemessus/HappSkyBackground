@@ -48,12 +48,18 @@ static void HSBInstall(void) {
         dispatch_async(dispatch_get_main_queue(), ^{ HSBInstall(); });
         return;
     }
-
     UIApplication *app = UIApplication.sharedApplication;
-    for (UIWindow *window in app.windows) {
-        UIViewController *root = window.rootViewController;
-        if (root.viewIfLoaded) {
-            HSBInstallOnView(root.view);
+    for (UIScene *scene in app.connectedScenes) {
+        if (![scene isKindOfClass:[UIWindowScene class]]) {
+
+            continue;
+        }
+        UIWindowScene *windowScene = (UIWindowScene *)scene;
+        for (UIWindow *window in windowScene.windows) {
+            UIViewController *root = window.rootViewController;
+            if (root.viewIfLoaded) {
+                HSBInstallOnView(root.view);
+            }
         }
     }
 }
