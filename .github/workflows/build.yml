@@ -1,21 +1,23 @@
-steps:
-  - name: Checkout
-    uses: actions/checkout@v4
-
-  - name: Install Theos
-    uses: Randomblock1/theos-action@v1
-    with:
-      theos-dir: theos
-      theos-src: https://github.com/theos/theos
-      theos-sdks: https://github.com/theos/sdks
-
-  - name: Build package
-    run: |
-      export THEOS="${{ github.workspace }}/theos"
-      make clean package FINALPACKAGE=1
-
-  - name: Upload deb
-    uses: actions/upload-artifact@v4
-    with:
-      name: HappSkyBackground-deb
-      path: packages/*.deb
+name: Build deb
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Theos
+        uses: Randomblock1/theos-action@v1
+        with:
+          theos-dir: theos
+          theos-src: https://github.com/theos/theos
+          theos-sdks: https://github.com/theos/sdks
+      - name: Build package
+        run: |
+          export THEOS="${{ github.workspace }}/theos"
+          make clean package FINALPACKAGE=1
+      - name: Upload deb
+        uses: actions/upload-artifact@v4
+        with:
+          name: HappSkyBackground-deb
+          path: packages/*.deb
