@@ -43,7 +43,7 @@ static void HSBInstall(void) {
                 continue;
             }
 
-        UIView *old = [window.rootViewController.view viewWithTag:HSB_TAG];
+        UIView *old = [window viewWithTag:HSB_TAG];
 
             if (old) {
                 old.frame = window.bounds;
