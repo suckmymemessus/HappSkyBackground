@@ -36,8 +36,7 @@ static void HSBInstallOnView(UIView *view) {
     iv.userInteractionEnabled = NO;
     iv.alpha = 1.0;
 
-    [view addSubview:iv];
-[view sendSubviewToBack:iv];
+    [view insertSubview:iv atIndex:0];
 
     // Let the root container reveal the image while leaving child UI untouched.
     
