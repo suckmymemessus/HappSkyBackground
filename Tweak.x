@@ -44,50 +44,52 @@ static void HSBInstallOnView(UIView *view) {
 
 static void HSBInstall(void) {
     if (![NSThread isMainThread]) {
-        dispatch_async(dispatch_get_main_queue(), ^{ HSBInstall(); });
-        return;
-    }
-    UIApplication *app = UIApplication.sharedApplication;
-    for (UIScene *scene in app.connectedScenes) {
-        if (![scene isKindOfClass:[UIWindowScene class]]) {
-
-            continue;
-        }
-        UIWindowScene *windowScene = (UIWindowScene *)scene;
-        for (UIWindow *window in windowScene.windows) {
-            UIViewController *root = window.rootViewController;
-            if (root.viewIfLoaded) {
-                HSBInstallOnView(root.view);
-            }
-        }
-    }
-}
-
-%hook UIViewController
-
-- (void)viewDidAppear:(BOOL)animated {
-    %orig(animated);
-
-    if ([NSBundle.mainBundle.bundleIdentifier isEqualToString:@"su.ffg.happ"]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             HSBInstall();
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)),
-                           dispatch_get_main_queue(), ^{
-                HSBInstall();
-            });
         });
+        return;
     }
-}
 
-%end
+    UIApplication *app = UIApplication.sharedApplication;
 
-%ctor {
-    if ([NSBundle.mainBundle.bundleIdentifier isEqualToString:@"su.ffg.happ"]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)),
-                           dispatch_get_main_queue(), ^{
-                HSBInstall();
-            });
-        });
+    for (UIScene *scene in app.connectedScenes) {
+        if (![scene isKindOfClass:[UIWindowScene class]]) {
+            continue;
+        }
+
+        UIWindowScene *windowScene = (UIWindowScene *)scene;
+
+        for (UIWindow *window in windowScene.windows) {
+            if (!window.rootViewController) {
+                continue;
+            }
+
+            UIImage *image = HSBImage();
+            if (!image) {
+                continue;
+            }
+
+            UIView *old = [window viewWithTag:HSB_TAG];
+
+            if (old) {
+                old.frame = window.bounds;
+                continue;
+            }
+
+            UIImageView *iv = [[UIImageView alloc] initWithImage:image];
+
+            iv.tag = HSB_TAG;
+            iv.frame = window.bounds;
+            iv.autoresizingMask =
+                UIViewAutoresizingFlexibleWidth |
+                UIViewAutoresizingFlexibleHeight;
+
+            iv.contentMode = UIViewContentModeScaleAspectFill;
+            iv.clipsToBounds = YES;
+            iv.userInteractionEnabled = NO;
+            iv.alpha = 1.0;
+
+            [window insertSubview:iv atIndex:0];
+        }
     }
 }
