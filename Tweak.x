@@ -15,15 +15,6 @@ static UIImage *HSBImage(void) {
     return image;
 }
 
-
-static void HSBInstall(void) {
-    if (![NSThread isMainThread]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            HSBInstall();
-        });
-        return;
-    }
-
 static void HSBFixTransparency(UIView *view) {
     if (!view) return;
     if (![view isKindOfClass:[UIImageView class]] &&
@@ -36,6 +27,21 @@ static void HSBFixTransparency(UIView *view) {
             }
         }
     }
+    for (UIView *subview in view.subviews) {
+        HSBFixTransparency(subview);
+    }
+}
+
+
+static void HSBInstall(void) {
+    if (![NSThread isMainThread]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            HSBInstall();
+        });
+        return;
+    }
+
+
     for (UIView *subview in view.subviews) {
         HSBFixTransparency(subview);
     }
