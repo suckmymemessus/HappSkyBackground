@@ -42,10 +42,7 @@ static void HSBInstall(void) {
     }
 
 
-    for (UIView *subview in view.subviews) {
-        HSBFixTransparency(subview);
-    }
-}
+    
 
 
     UIApplication *app = UIApplication.sharedApplication;
