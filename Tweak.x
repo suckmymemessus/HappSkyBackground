@@ -39,8 +39,7 @@ static void HSBInstallOnView(UIView *view) {
     [view insertSubview:iv atIndex:0];
 
     // Let the root container reveal the image while leaving child UI untouched.
-    view.backgroundColor = [UIColor clearColor];
-    view.opaque = NO;
+    
 }
 
 static void HSBInstall(void) {
