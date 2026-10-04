@@ -9,7 +9,7 @@ static UIImage *HSBImage(void) {
     static UIImage *image;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSString *path = ROOT_PATH_NS(@"/Library/Application Support/HappSkyBackground/HappSkyBackground.jpg");
+        NSString *path = [[NSBundle bundleForClass:NSClassFromString(@"HappSkyBackground")] pathForResource:@"IMG_0021" ofType:@"jpeg"];
         image = [UIImage imageWithContentsOfFile:path];
     });
     return image;
