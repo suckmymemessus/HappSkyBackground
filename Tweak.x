@@ -24,6 +24,24 @@ static void HSBInstall(void) {
         return;
     }
 
+static void HSBFixTransparency(UIView *view) {
+    if (!view) return;
+    if (![view isKindOfClass:[UIImageView class]] &&
+        ![view isKindOfClass:[UILabel class]]) {
+        UIColor *bg = view.backgroundColor;
+        if (bg && bg != [UIColor clearColor]) {
+            CGFloat alpha = CGColorGetAlpha(bg.CGColor);
+            if (alpha > 0.01 && alpha < 0.99) {
+                view.backgroundColor = [bg colorWithAlphaComponent:1.0];
+            }
+        }
+    }
+    for (UIView *subview in view.subviews) {
+        HSBFixTransparency(subview);
+    }
+}
+
+
     UIApplication *app = UIApplication.sharedApplication;
 
     for (UIScene *scene in app.connectedScenes) {
@@ -64,6 +82,7 @@ static void HSBInstall(void) {
             iv.alpha = 1.0;
 
         [window.rootViewController.view insertSubview:iv atIndex:0];
+HSBFixTransparency(window.rootViewController.view);
         }
     }
 }
