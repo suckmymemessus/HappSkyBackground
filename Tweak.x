@@ -15,32 +15,6 @@ static UIImage *HSBImage(void) {
     return image;
 }
 
-static void HSBInstallOnView(UIView *view) {
-    if (!view || view.bounds.size.width < 10 || view.bounds.size.height < 10) return;
-
-    UIImage *image = HSBImage();
-    if (!image) return;
-
-    UIView *old = [view viewWithTag:HSB_TAG];
-    if (old) {
-        old.frame = view.bounds;
-        return;
-    }
-
-    UIImageView *iv = [[UIImageView alloc] initWithImage:image];
-    iv.tag = HSB_TAG;
-    iv.frame = view.bounds;
-    iv.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    iv.contentMode = UIViewContentModeScaleAspectFill;
-    iv.clipsToBounds = YES;
-    iv.userInteractionEnabled = NO;
-    iv.alpha = 1.0;
-
-    [view insertSubview:iv atIndex:0];
-
-    // Let the root container reveal the image while leaving child UI untouched.
-    
-}
 
 static void HSBInstall(void) {
     if (![NSThread isMainThread]) {
