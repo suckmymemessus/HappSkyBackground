@@ -63,7 +63,7 @@ static void HSBInstall(void) {
             iv.userInteractionEnabled = NO;
             iv.alpha = 1.0;
 
-            [window insertSubview:iv atIndex:0];
+        [window.rootViewController.view insertSubview:iv atIndex:0];
         }
     }
 }
